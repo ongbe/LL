@@ -633,7 +633,7 @@ QStringList LteHeader::labels() const
 
 void LteHeader::clear()
 {
-    LteDeleteAll(_headerItems);
+    qDeleteAll(_headerItems);
 }
 
 void LteHeader::setAutoAdjust(bool adjust)

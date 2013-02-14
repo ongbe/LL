@@ -122,10 +122,10 @@ private:
     QVector<qreal> _columnWidth;
 
     int _currentIndex;
-    int _totalHeight;
     int _currentYPos;
     int _pressedYPos;
 
+    qreal _totalHeight;
     qreal _rowHeight;
 
     friend class LLTableWidgetPrivate;

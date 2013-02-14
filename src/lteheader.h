@@ -9,24 +9,6 @@
 #undef DEFINE_VAR
 #define DEFINE_VAR(TYPE, NAME, VALUE) const TYPE NAME = VALUE;
 
-template <typename ForwardIterator>
-void LteDeleteAll(ForwardIterator begin,ForwardIterator end)
-{
-    while(begin != end)
-    {
-        delete *begin;
-        *begin = NULL;
-        ++begin;
-    }
-}
-
-template <typename Container>
-void LteDeleteAll(Container& container)
-{
-    LteDeleteAll(container.begin(),container.end());
-    container.clear();
-}
-
 namespace Def
 {
     namespace Color

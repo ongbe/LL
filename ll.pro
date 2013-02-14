@@ -8,3 +8,7 @@ HEADERS += ./src/lteheader.h \
 SOURCES += ./src/lteheader.cpp \
 	   ./src/lltablewidget.cpp \
            ./test/testmain.cpp
+
+HEADERS += ./test/test_lltablewidget.h
+
+SOURCES += ./test/test_lltablewidget.cpp
