@@ -210,6 +210,7 @@ void LLTableWidgetSpirit::enlargeRowHeight()
         _rowHeight = LL::Constant::MaxRowHeight;
     }
     update();
+    fire_setBarMax();
 }
 
 void LLTableWidgetSpirit::shrinkRowHeight()
@@ -220,6 +221,14 @@ void LLTableWidgetSpirit::shrinkRowHeight()
         _rowHeight = LL::Constant::RowHeight;
     }
     update();
+    fire_setBarMax();
+}
+
+void LLTableWidgetSpirit::fire_setBarMax()
+{
+    _totalHeight = _rowHeight * _rows.size();
+    _totalHeight = _totalHeight - height();
+    emit setBarMax((int)_totalHeight);
 }
 
 void LLTableWidgetSpirit::fire_clickItem()
@@ -623,10 +632,11 @@ void LLTableWidgetPrivate::initSettings()
 
 void LLTableWidgetPrivate::initConnections()
 {
-    connect(_spirit,SIGNAL(setBarValue(int)),_bar,SLOT(setValue(int)));
-    connect(_bar,SIGNAL(valueChanged(int)),_spirit,SLOT(setCurrentYPos(int)));
-    connect(_spirit,SIGNAL(heightChanged(int)),this,SLOT(changeHeight(int)));
-    connect(_header,SIGNAL(columnWidthChanged(QVector<qreal>)),_spirit,SLOT(setColumnWidth(QVector<qreal>)));
+    connect(_spirit, SIGNAL(setBarValue(int)), _bar, SLOT(setValue(int)));
+    connect(_bar, SIGNAL(valueChanged(int)), _spirit, SLOT(setCurrentYPos(int)));
+    connect(_spirit, SIGNAL(heightChanged(int)), this, SLOT(changeHeight(int)));
+    connect(_header, SIGNAL(columnWidthChanged(QVector<qreal>)), _spirit, SLOT(setColumnWidth(QVector<qreal>)));
+    connect(_spirit, SIGNAL(setBarMax(int)), this, SLOT(setBarMax(int)));
 }
 
 /*!
@@ -635,6 +645,11 @@ void LLTableWidgetPrivate::initConnections()
 void LLTableWidgetPrivate::changeHeight(int totalHeight)
 {
     _bar->setMaximum(totalHeight);
+}
+
+void LLTableWidgetPrivate::setBarMax(int max)
+{
+    _bar->setMaximum(max);
 }
 
 /*!

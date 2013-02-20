@@ -53,6 +53,7 @@ private:
 
 private Q_SLOTS:
     void changeHeight(int totalHeight);
+    void setBarMax(int max);
 
 private:
 
@@ -110,6 +111,7 @@ private:
     void enlargeRowHeight();
     void shrinkRowHeight();
 
+    void fire_setBarMax();
     void fire_clickItem();
 
 private:
@@ -133,6 +135,7 @@ private:
 Q_SIGNALS:
     void heightChanged(int totalHeight);
     void setBarValue(int value);
+    void setBarMax(int max);
 };
 
 #endif // LLTABLEWIDGET_P_H
