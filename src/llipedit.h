@@ -12,7 +12,8 @@ public:
     explicit LLIpEdit(QWidget *parent = 0);
 
 public:
-
+    QString ip() const;
+    void setIp(const QString& strIp);
 
 private:
     LLIpEditPrivate* d_ptr;
