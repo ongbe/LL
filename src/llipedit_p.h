@@ -17,7 +17,7 @@ public:
     explicit LLIpEditPrivate(LLIpEdit* parent);
 
 public:
-    QString ip() const;
+    QString ip();
     void setIp(const QString& strIp);
 
 protected:
@@ -27,6 +27,8 @@ private:
     void drawBg(QPainter* painter);
     QLabel* createLabel();
     void initEdits();
+    bool inputIp(const QString& strIp);
+    bool outputIp();
 private:
     QString _ip;
     QLineEdit* _edits[Count];

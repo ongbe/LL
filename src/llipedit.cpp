@@ -13,6 +13,7 @@ namespace LL
     {
         const int RoundRadius = 4;
         const int MaxWidth = 140;
+        const int MaxHeight = 30;
     }
 
     namespace Palette
@@ -39,6 +40,7 @@ LLIpEditPrivate::LLIpEditPrivate(LLIpEdit *parent):QWidget(parent)
     setLayout(mainLayout);
 
     setFixedWidth(LL::Constant::MaxWidth);
+    setFixedHeight(LL::Constant::MaxHeight);
 }
 
 /*!
@@ -83,17 +85,63 @@ void LLIpEditPrivate::initEdits()
     }
 }
 
+bool LLIpEditPrivate::inputIp(const QString& strIp)
+{
+    if(strIp.split('.').size() != Count)
+    {
+        return false;
+    }
+
+    const QStringList kItemList = strIp.split('.');
+    for(int i = 0; i < kItemList.size(); ++i)
+    {
+        bool ok = false;
+        int value = kItemList.at(i).toInt(&ok);
+        if(!ok || (0 <= value && value <= 255))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool LLIpEditPrivate::outputIp()
+{
+    _ip.clear();
+    for(int i = 0; i < Count; ++i)
+    {
+        if(_edits[i]->text().isEmpty())
+        {
+            return false;
+        }
+        _ip += _edits[i]->text() + ".";
+    }
+    _ip = _ip.left(_ip.length() - 1);
+    return true;
+}
+
+
 /*!
  *
  */
 void LLIpEditPrivate::setIp(const QString &strIp)
 {
-    _ip = strIp;
+    if(inputIp(strIp))
+    {
+        _ip = strIp;
+    }
 }
 
-QString LLIpEditPrivate::ip() const
+QString LLIpEditPrivate::ip()
 {
-    return _ip;
+    if(outputIp())
+    {
+        return _ip;
+    }
+    else
+    {
+        return QString();
+    }
 }
 
 /**********************************/
@@ -110,9 +158,9 @@ LLIpEdit::LLIpEdit(QWidget *parent) :
     setLayout(mainLayout);
 }
 
-QString LLIpEdit::ip() const
+QString LLIpEdit::ip()
 {
-    Q_D(const LLIpEdit);
+    Q_D(LLIpEdit);
     return d->ip();
 }
 void LLIpEdit::setIp(const QString& strIp)

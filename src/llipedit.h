@@ -12,7 +12,7 @@ public:
     explicit LLIpEdit(QWidget *parent = 0);
 
 public:
-    QString ip() const;
+    QString ip();
     void setIp(const QString& strIp);
 
 private:
